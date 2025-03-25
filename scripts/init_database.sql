@@ -1,16 +1,11 @@
-
 /*
 =============================================================
 Create Database and Schemas
 =============================================================
-Database Name: 
-    DataWarehouse
 Script Purpose:
     This script creates a new database named 'DataWarehouse' after checking if it already exists. 
     If the database exists, it is dropped and recreated. Additionally, the script sets up three schemas 
     within the database: 'bronze', 'silver', and 'gold'.
-
-Please run the following script in the psql command-line.
 	
 WARNING:
     Running this script will drop the entire 'DataWarehouse' database if it exists. 
@@ -18,24 +13,30 @@ WARNING:
     and ensure you have proper backups before running this script.
 */
 
+USE master;
+GO
+
 -- Drop and recreate the 'DataWarehouse' database
-DROP DATABASE IF EXISTS "DataWarehouse";
+IF EXISTS (SELECT 1 FROM sys.databases WHERE name = 'DataWarehouse')
+BEGIN
+    ALTER DATABASE DataWarehouse SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+    DROP DATABASE DataWarehouse;
+END;
+GO
 
 -- Create the 'DataWarehouse' database
-CREATE DATABASE "DataWarehouse"
-    WITH
-    OWNER = postgres
-    ENCODING = 'UTF8'
-    LC_COLLATE = 'en_US.utf8'
-    LC_CTYPE = 'en_US.utf8'
-    TABLESPACE = pg_default
-    CONNECTION LIMIT = -1
-    IS_TEMPLATE = False;
+CREATE DATABASE DataWarehouse;
+GO
 
--- switch to DataWarehouse database
-\c DataWarehouse
+USE DataWarehouse;
+GO
 
 -- Create Schemas
-create schema bronze;
-create schema silver;
-create schema gold;
+CREATE SCHEMA bronze;
+GO
+
+CREATE SCHEMA silver;
+GO
+
+CREATE SCHEMA gold;
+GO
