@@ -10,8 +10,6 @@ Script Purpose:
 */
 DROP TABLE IF EXISTS silver.crm_cust_info;
 
-select * from silver.crm_cust_info;
-
 CREATE TABLE silver.crm_cust_info (
     cst_id              INTEGER,
     cst_key             VARCHAR(50),
