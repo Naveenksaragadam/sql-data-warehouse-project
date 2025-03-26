@@ -27,4 +27,3 @@ services:
 volumes:
   postgres-data:
   pgadmin-data:
-f
